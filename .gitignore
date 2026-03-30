@@ -1,0 +1,11 @@
+# Build artifacts
+hw5/bin/
+hw5/build/
+**/*.o
+**/*.d
+*~
+*.bak
+*.out
+
+# macOS
+.DS_Store
