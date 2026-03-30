@@ -8,6 +8,44 @@ The project emphasizes low-level network programming, thread-safe shared state m
 
 ---
 
+## Architecture
+
+The server is a **single process** with a **listener thread** and **one POSIX thread per TCP connection**. Shared game state (maze grid, player table) lives in the address space of all threads; **mutexes** protect the maze and per-player data, and the **client registry** uses a **mutex + semaphore** so shutdown can wait until every service thread has exited.
+
+**Control flow**
+
+1. `main` parses arguments, initializes `client_registry`, `maze`, and `player`, installs `SIGHUP` (graceful stop), then `listen` / `accept` in a loop.
+2. Each accepted socket is handed to `mzw_client_service` (`server.c`), which registers the fd, reads **framed packets** via `protocol.c`, and dispatches by type (`LOGIN`, `MOVE`, `TURN`, `FIRE`, `REFRESH`, `SEND`, …).
+3. `player.c` applies actions against the maze, updates scores, **diffs or full-refreshes** each client’s corridor view, and **broadcasts** chat and score packets to all connected players (using a snapshot of active players to avoid races with logout).
+4. Laser hits use **`pthread_kill` + `SIGUSR1`** on the victim’s service thread so hit handling runs in the correct context; server-wide shutdown uses **`SIGHUP`** to close the listener and **`shutdown()`** on registered fds so blocked reads wake up and threads can exit cleanly.
+
+```mermaid
+flowchart TB
+  subgraph main_thread[Main thread]
+    M["main.c\nCLI · signals · listen/accept"]
+  end
+
+  subgraph worker[Per-connection threads]
+    S["server.c\nmzw_client_service"]
+    S --> R["protocol.c\nread/write framed packets"]
+    S --> D["Dispatch LOGIN / MOVE / …"]
+  end
+
+  subgraph shared[Shared state]
+    P["player.c\navatars · views · chat · lasers"]
+    Z["maze.c\ngrid · collisions · line of sight"]
+    C["client_registry.c\nfd list · shutdown sync"]
+  end
+
+  M -->|pthread_create detach| S
+  D --> P
+  P --> Z
+  S --> C
+  P --> R
+```
+
+---
+
 ## Features
 
 - 🧠 **Multi-threaded Server Core:** Each client connection spawns a dedicated service thread using POSIX threads.
@@ -23,6 +61,8 @@ The project emphasizes low-level network programming, thread-safe shared state m
 ---
 
 ## Modules
+
+Source under `hw5/src/`, headers under `hw5/include/`.
 
 - `main.c`: Initializes the server, handles command-line options, sets up signals, and starts the accept loop.
 - `protocol.c`: Implements sending and receiving of structured packets over sockets.
