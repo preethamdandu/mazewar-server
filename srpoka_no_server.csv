@@ -1,0 +1,55 @@
+Graded Commit:225f65b15536304d468f4befb4508bb0e6ea9ba8
+
+TEST NAME, POINTS,OUT OF
+client_registry_suite/basic_one_registry,1,1,
+client_registry_suite/basic_one_registry_premature,1,1,
+client_registry_suite/basic_two_registries,1,1,
+client_registry_suite/many_threads_one_registry,1,1,
+client_registry_suite/many_threads_one_registry_premature,1,1,
+data_suite/random_motion_test,1,1,
+indicator_suite/client_registry,1,1,
+indicator_suite/main,1,1,
+indicator_suite/maze,1,1,
+indicator_suite/player,1,1,
+indicator_suite/protocol,1,1,
+indicator_suite/server,1,1,
+main_suite/bad_template,1,1,
+main_suite/empty_template,0,1,1 assertion(s) failed.: tests/main_test.c:94: The program exited with an unexpected signal (11)
+main_suite/good_template,1,1,
+main_suite/no_args,1,1,
+main_suite/no_space_template,1,1,
+main_suite/nonexistent_template,1,1,
+main_suite/port_arg_only,1,1,
+maze_suite/find_target_test_1,1,1,
+maze_suite/find_target_test_2,1,1,
+maze_suite/get_cols_test,1,1,
+maze_suite/get_rows_test,1,1,
+maze_suite/move_test_1,1,1,
+maze_suite/move_test_2,1,1,
+maze_suite/move_test_3,1,1,
+maze_suite/remove_test,1,1,
+maze_suite/set_player_test_1,1,1,
+maze_suite/set_player_test_2,1,1,
+maze_suite/set_player_test_3,1,1,
+maze_suite/view_test_1a,0,1,"1 assertion(s) failed.: tests/maze_test.c:266: Expected 1, was 0"
+maze_suite/view_test_1b,0,1,"1 assertion(s) failed.: tests/maze_test.c:284: Expected 5, was 4"
+maze_suite/view_test_1c,0,1,"1 assertion(s) failed.: tests/maze_test.c:302: Expected 10, was 9"
+maze_suite/view_test_2,0,1,1 assertion(s) failed.: tests/maze_test.c:358: View did not match expected
+player_suite/fire_laser_hit,1,1,
+player_suite/fire_laser_miss,1,1,
+player_suite/login_logout_stress,0,1,The test crashed.: None
+player_suite/move_check_view,0,1,1 assertion(s) failed.: tests/player_test.c:340: Inferred display view does not match actual view
+player_suite/player_login_logout,1,1,
+player_suite/player_move,1,1,
+player_suite/player_reset,1,1,
+player_suite/player_rotate,1,1,
+protocol_suite/recv_empty,1,1,
+protocol_suite/recv_error,1,1,
+protocol_suite/recv_no_payload,1,1,
+protocol_suite/recv_short_header,1,1,
+protocol_suite/recv_short_payload,1,1,
+protocol_suite/recv_with_payload,1,1,
+protocol_suite/send_error,1,1,
+protocol_suite/send_no_payload,1,1,
+protocol_suite/send_with_payload,1,1,
+total,44,51

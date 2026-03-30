@@ -1,0 +1,10 @@
+Graded Commit:225f65b15536304d468f4befb4508bb0e6ea9ba8
+
+TEST NAME, POINTS,OUT OF
+server_suite/00_start_server,0,1,1 assertion(s) failed.: tests/server_test.c:146: Server did not terminate after SIGHUP
+server_suite/01_connect_disconnect,1,1,
+server_suite/02_connect_login,1,1,
+server_suite/03_connect_login_refresh,1,1,
+server_suite/03_connect_login_turn,1,1,
+server_suite/05_stress_test,0,1,1 assertion(s) failed.: tests/server_test.c:340: The expression (ret) == (0) is false.
+total,4,6
